@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DrumBeats</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="keys">
+        <div class="first-set">
+            <button data-key="A" class="key">
+                <kbd>A</kbd>
+                <span class="sound">clap</span>
+            </button>
+            <button data-key="S" class="key">
+                <kbd>S</kbd>
+                <span class="sound">hihat</span>
+            </button>
+            <button data-key="D" class="key">
+                <kbd>D</kbd>
+                <span class="sound">kick</span>
+            </button>
+        </div>
+        <div class="second-set">
+            <button data-key="F" class="key">
+                <kbd>F</kbd>
+                <span class="sound">openhat</span>
+            </button>
+            <button data-key="G" class="key">
+                <kbd>G</kbd>
+                <span class="sound">boom</span>
+            </button>
+            <button data-key="H" class="key">
+                <kbd>H</kbd>
+                <span class="sound">ride</span>
+            </button>
+        </div>
+        <div class="third-set">
+            <button data-key="J" class="key">
+                <kbd>J</kbd>
+                <span class="sound">snare</span>
+            </button>
+            <button data-key="K" class="key">
+                <kbd>K</kbd>
+                <span class="sound">tom</span>
+            </button>
+            <button data-key="L" class="key">
+                <kbd>L</kbd>
+                <span class="sound">tink</span>
+            </button>
+        </div>
+    </div>
+
+    <audio data-key="A" src="sounds/clap.wav"></audio>
+    <audio data-key="S" src="sounds/hihat.wav"></audio>
+    <audio data-key="D" src="sounds/kick.wav"></audio>
+    <audio data-key="F" src="sounds/openhat.wav"></audio>
+    <audio data-key="G" src="sounds/boom.wav"></audio>
+    <audio data-key="H" src="sounds/ride.wav"></audio>
+    <audio data-key="J" src="sounds/snare.wav"></audio>
+    <audio data-key="K" src="sounds/tom.wav"></audio>
+    <audio data-key="L" src="sounds/tink.wav"></audio>
+
+    <script>
+        function removeTransition(e) {
+            if (e.propertyName !== 'transform') return;
+            e.target.classList.remove('playing');
+        }
+
+        function playSound(e) {
+            let keyLetter, audio, key;
+            if (e.key) {
+                keyLetter = e.key.toUpperCase();
+                audio = document.querySelector(`audio[data-key="${keyLetter}"]`);
+                key = document.querySelector(`button[data-key="${keyLetter}"]`);
+            } else {
+                audio = document.querySelector(`audio[data-key="${e.srcElement.innerHTML}"]`);
+                key = document.querySelector(`button[data-key="${e.srcElement.innerHTML}"]`);
+            }
+
+            if (!audio) return;
+            key.classList.add('playing');
+            audio.currentTime = 0; //rewind to start
+            audio.play();
+        }
+
+        const keys = Array.from(document.querySelectorAll('.key'));
+        keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+        window.addEventListener('click', playSound);
+        window.addEventListener('keydown', playSound);
+    </script>
+</body>
+
+</html>
