@@ -54,12 +54,13 @@ button {
   outline: none;
 }
 
-@media (max-width: 700px) { /* Change this to 400px, 800px for demo purpose */
+@media screen and (max-width: 700px) { /* Change this to 400px, 800px for demo purpose */
+  body {
+    background: #dbd6cc;
+  }
+
   .keys {
     display: flex;
     flex-direction: column; /* For vertical placement of items */
-  }
-  body {
-    background: #dbd6cc;
   }
 }
